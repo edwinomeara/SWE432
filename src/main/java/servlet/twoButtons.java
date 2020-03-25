@@ -121,9 +121,9 @@ private void PrintBody (PrintWriter out, String lhs, String rhs, String rslt)
    out.println("A simple example that demonstrates how to operate with");
    out.println("multiple submit buttons.");
    out.println("</p>");
-   out.println("<br>");
+  
    out.println("<p>");
-   out.println("By Edwin O'Meara");
+   out.println("Edited by: Edwin O'Meara");
    out.println("</p>");	
 	
    out.print  ("<form method=\"post\"");
