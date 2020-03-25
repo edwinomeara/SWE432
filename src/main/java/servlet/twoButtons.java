@@ -16,8 +16,8 @@ import javax.servlet.http.HttpServletResponse;
 public class twoButtons extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	// Location of servlet.
-	static String Domain  = "cs.gmu.edu:8443";
-	static String Path    = "/offutt/servlet/";
+	static String Domain  = "swe432-twobuttons.";
+	static String Path    = "herokuapp.com/";
 	static String Servlet = "twoButtons";
 //	static String Domain  = "localhost:8080/";
 //	static String Path    = "/SWE432/";
