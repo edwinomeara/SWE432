@@ -1,5 +1,7 @@
 
 
+
+
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -83,9 +85,12 @@ public class SWE432Assignment6 extends HttpServlet {
 		out.println("<p>");
 		out.println("Your chair located in "+ location +" received a grade of: "+ ans + " " + grade +".");
 		out.println("</p>");
-		out.println("");
-		out.println("");
-		out.println("");
+		out.println("<br>");
+		out.println("<p>");
+		out.println("Collaboration Summary:");
+		out.println("\nEdwin: worked on the css and format of the website and parsing of radio buttons\n" + 
+				"Will: worked on the text area apearing and form actions\n");
+		out.println("</p>");
 		out.println("</html>");
 	}
 	
