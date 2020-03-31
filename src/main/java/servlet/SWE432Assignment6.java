@@ -146,7 +146,7 @@ public class SWE432Assignment6 extends HttpServlet {
 		out.println("<input type=\"text\" id=\"lName\" name=\"lName\">");
 		out.println("<label for=\"userLocation\">Location:</label>");
 		out.println("<input type=\"text\" id=\"userLocation\" name=\"userLocation\">");
-
+		out.println("<br>");
 		out.println("<div>");
 		out.println("<h3>Comfort Rating</h3>");
 		out.println("<label><input type=\"radio\" name=\"comfort\" id=\"c4\" onclick=\"cshowReason()\" value=100>Great</label>");
