@@ -24,13 +24,13 @@ public class persistenceFile extends HttpServlet{
   static String RESOURCE_FILE = "entries.txt";
   static final String VALUE_SEPARATOR = ";";
 
-  //static String Domain  = "swe432-twobuttons.";
-  //static String Path    = "herokuapp.com/";
-  //static String Servlet = "persistenceFile";
-
   static String Domain  = "swe432-twobuttons.";
-	static String Path    = "herokuapp.com/";
-	static String Servlet = "twoButtons";
+  static String Path    = "herokuapp.com/";
+  static String Servlet = "file";
+
+//   static String Domain  = "swe432-twobuttons.";
+// 	static String Path    = "herokuapp.com/";
+// 	static String Servlet = "twoButtons";
   
   // Button labels
   static String OperationAdd = "Add";
