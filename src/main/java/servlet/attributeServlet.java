@@ -2,17 +2,51 @@
 
 // Import Servlet Libraries
 import javax.servlet.*;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 
 // Import Java Libraries
 import java.io.*;
 import java.util.Enumeration;
 
+@WebServlet("/attributeServlet")
 public class attributeServlet extends HttpServlet
 {
 public void doGet (HttpServletRequest request, HttpServletResponse response)
        throws ServletException, IOException
 {
+	   String action = request.getParameter("action");
+
+	   if (action != null && action.equals("invalidate"))
+	   {  // Called from the invalidate button, kill the session.
+	      // Get session object
+	      HttpSession session = request.getSession();
+	      session.invalidate();
+
+	      response.setContentType("text/html");
+	      PrintWriter out = response.getWriter();
+
+	      out.println("<html>");
+	      out.println("<head>");
+	      out.println(" <title>Session lifecycle</title>");
+	      out.println("</head>");
+	      out.println("");
+	      out.println("<body>");
+
+	      out.println("<p>Your session has been invalidated.</P>");
+
+	      // Create a link so the user can create a new session.
+	      // The link will have a parameter builtin
+	      String lifeCycleURL = "https://swe432-twobuttons.herokuapp.com/attributeServlet";
+	      out.println("<a href=\"" + lifeCycleURL + "?action=newSession\">");
+	      out.println("Create new session</A>");
+
+	      out.println("</body>");
+	      out.println("</html>");
+	      out.close();
+	   } //end if
+	   else
+	   {  // 
    // Get session object
    HttpSession session = request.getSession();
 
@@ -60,6 +94,7 @@ public void doGet (HttpServletRequest request, HttpServletResponse response)
 
    out.println(" <br><input type=\"checkbox\" name=\"attrib_remove\">Remove");
    out.println(" <input type=\"submit\" name=\"update\" value=\"Update\">");
+
    out.println("</form>");
    out.println("<hr>");
 
@@ -76,8 +111,15 @@ public void doGet (HttpServletRequest request, HttpServletResponse response)
       out.println(att_value);
    } //end while
 
+   String lifeCycleURL = "https://swe432-twobuttons.herokuapp.com/attributeServlet";
+   out.print  ("<br><br><a href=\"" + lifeCycleURL + "?action=invalidate\">");
+   out.println("Invalidate the session</a>");
+ //  out.print  ("<br><a href=\"" + lifeCycleURL + "\">");
+ //  out.println("Reload this page</a>");
+
    out.println("</body>");
    out.println("</html>");
    out.close();
 } // End doGet
 } //End  SessionLifeCycle
+}
