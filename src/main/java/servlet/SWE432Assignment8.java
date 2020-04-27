@@ -114,8 +114,11 @@ public class SWE432Assignment8 extends HttpServlet {
 
 	        BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
 	        String line;
+	        int ratings=0;
+	        int sumtotal=0;
 	        while ((line = bufferedReader.readLine()) != null) {
 	          String []  entry= line.split(VALUE_SEPARATOR);
+	          ratings++;
 	          int num = 1;
 	          out.println("  <p>");
 	          for(String s : entry) {
@@ -127,6 +130,7 @@ public class SWE432Assignment8 extends HttpServlet {
 	        		  out.print(" rated the chair located in " + s);
 	        	  }else if(num == 4) {
 	        		  out.print(" : " + s);
+	        		  sumtotal+=Integer.parseInt(s);
 	        	  }
 	        	  else {
 	        		  num = 0;
@@ -134,8 +138,12 @@ public class SWE432Assignment8 extends HttpServlet {
 	        	  num++;
 	          }
 	          out.println("</p>");
-
 	        }
+	        out.println("<p>");
+	        out.println("<hr>");
+	        out.println("There have been "+ratings+ " chairs rated ");
+	        out.println("These chairs have an average rating of:"+(int)(sumtotal/ratings));
+	        out.println("</p>");
 	        bufferedReader.close();
 	      } catch (FileNotFoundException ex) {
 	            ex.printStackTrace();
@@ -144,6 +152,7 @@ public class SWE432Assignment8 extends HttpServlet {
 	        }
 	     out.println(" </table>");
 	     out.println("");
+	     
 	     out.println("</body>");
 	}
 	
