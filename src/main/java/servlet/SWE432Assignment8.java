@@ -22,6 +22,10 @@ public class SWE432Assignment8 extends HttpServlet {
 	 static final String VALUE_SEPARATOR = ";";
 	 
 	 static String OperationAdd = "Add";
+	 
+	 static String errorString = "";
+	 
+	 static boolean errors = false;
 	
     public SWE432Assignment8() {
         super();
@@ -29,7 +33,6 @@ public class SWE432Assignment8 extends HttpServlet {
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 		printPage(out);
@@ -39,60 +42,60 @@ public class SWE432Assignment8 extends HttpServlet {
 	//prints the output and persisted data -----------------------------------------------------------------------------------------
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		   //String firstName = request.getParameter("fName");
 		   String firstName = request.getParameter(Data.FNAME.name());
 		   String lastName = request.getParameter(Data.LNAME.name());
 		   String location = request.getParameter(Data.LOCATION.name());
 		   
-		   int comf = Integer.valueOf(request.getParameter("comfort"));
-		   int sati = Integer.valueOf(request.getParameter("satisfaction"));
-		   int backsup = Integer.valueOf(request.getParameter("backSupport"));
-		   int mat = Integer.valueOf(request.getParameter("material"));
-		   int cush = Integer.valueOf(request.getParameter("cushion"));
-		   int ans = (comf + sati + backsup + mat + cush)/5;
+		   int comf = 0;
+		   int sati = 0;
+		   int backsup = 0;
+		   int mat = 0;
+		   int cush = 0;
 		   
-		   //checks to see if all values are valid
-		   boolean errors = checkValues(firstName, lastName, location, comf, sati, backsup, mat, cush, ans);
-		 
-		   String grade ="";
+		   errors = false;
+		   errorString = "";
 		   
-		   if(ans >= 90) {
-			   grade = "A";
-		   }else if(ans >= 80 && ans < 90) {
-			   grade = "B";
-		   }else if(ans >= 70 && ans < 80) {
-			   grade = "C";
-		   }else if(ans >= 60 && ans < 70) {
-			   grade = "D";
-		   }else {
-			   grade = "F";
+		   errors = checkValues(firstName, lastName, location, request.getParameter("comfort"), request.getParameter("satisfaction"), request.getParameter("backSupport"), request.getParameter("material"), request.getParameter("cushion"));
+		   
+			 response.setContentType("text/html");
+			 PrintWriter out = response.getWriter();
+		   
+		   if(!errors) {
+			   comf = Integer.valueOf(request.getParameter("comfort"));
+			   sati = Integer.valueOf(request.getParameter("satisfaction"));
+			   backsup = Integer.valueOf(request.getParameter("backSupport"));
+			   mat = Integer.valueOf(request.getParameter("material"));
+			   cush = Integer.valueOf(request.getParameter("cushion"));
+			   int ans = (comf + sati + backsup + mat + cush)/5;
+		   
+			   PrintWriter entriesPrintWriter = new PrintWriter(new FileWriter(RESOURCE_FILE, true), true);
+			   entriesPrintWriter.println(firstName + VALUE_SEPARATOR + lastName + VALUE_SEPARATOR + location + VALUE_SEPARATOR + ans);
+			   entriesPrintWriter.close();     
+			   printResponse(out, RESOURCE_FILE); 
 		   }
+		   //checks to see if all values are valid
 		   
-		 response.setContentType("text/html");
-		 PrintWriter out = response.getWriter();
 		 
-		 if(!errors) {
+//		   String grade ="";
+//		   
+//		   if(ans >= 90) {
+//			   grade = "A";
+//		   }else if(ans >= 80 && ans < 90) {
+//			   grade = "B";
+//		   }else if(ans >= 70 && ans < 80) {
+//			   grade = "C";
+//		   }else if(ans >= 60 && ans < 70) {
+//			   grade = "D";
+//		   }else {
+//			   grade = "F";
 		 
-			 PrintWriter entriesPrintWriter = new PrintWriter(new FileWriter(RESOURCE_FILE, true), true);
-		     entriesPrintWriter.println(firstName + VALUE_SEPARATOR + lastName + VALUE_SEPARATOR + location + VALUE_SEPARATOR + grade);
-		     
-		     entriesPrintWriter.close();
-		     
-		     //printOutput(out,ans, firstName, lastName, grade, location);
-		     printResponse(out, RESOURCE_FILE);
-			 
+		 else {
+			 printPage(out);
 		 }
+	
 	}
 	
 	private void printResponse(PrintWriter out, String resourcePath) {
-		//out.println("<body onLoad=\"setFocus()\">");
-//	    out.println("<p>");
-//	    out.println("A simple example that demonstrates how to persist data to a file");
-//	    out.println("</p>");
-//	    out.println("");
-//	    out.println(" <table>");
-		
-		
 
 	    try {
 	        out.println("  <tr>");
@@ -130,27 +133,7 @@ public class SWE432Assignment8 extends HttpServlet {
 	        	  num++;
 	          }
 	          out.println("</p>");
-	          //out.println("  <tr>");
-	          
-	          //for(String value: entry){
-	            //  out.println("   <td>"+value+"</td>");
-	          //}
-	        
-//	          int num = 1;
-//	          for(int i = 0; i < entry.length; i ++) {
-//	        	  if(num + i % 4 == 0  && num + i % 2 != 0) { //grade
-//	        		  out.print(" a rating of "+entry[i]+" ");
-//	        	  }else if(num + i % 3 == 0) { //location
-//	        		  out.print(" gave the chair located in "+entry[i]+" ");
-//	        	  }else if(num + i % 4 == 0  && num + i % 2 == 0) {
-//	        		  out.print(" "+entry[i]+" ");
-//	        	  }else {
-//	        		  out.print(" "+entry[i]+" ");
-//	        	  }
-//	        	  num++;
-//	          }
-//	          out.println("  </p>");
-	          //out.println("  </tr>");
+
 	        }
 	        bufferedReader.close();
 	      } catch (FileNotFoundException ex) {
@@ -162,35 +145,55 @@ public class SWE432Assignment8 extends HttpServlet {
 	     out.println("");
 	     out.println("</body>");
 	}
-//	private void printOutput(PrintWriter out, int ans, String fName, String lName, String grade, String location) {
-//		out.println("<html>");
-//		out.println("<style>");
-//		out.println("html,body{height: 100%; width: 100%; margin-top:0;background: linear-gradient(-45deg, #00ccff, #ffffff)}");
-//		out.println("</style>");
-//		out.println("<h1>");
-//		out.println("Hello " + fName + " " + lName);
-//		out.println("</h1>");
-//		out.println("<p>");
-//		out.println("Your chair located in "+ location +" received a grade of: "+ ans + " " + grade +".");
-//		out.println("</p>");
-//		out.println("<br>");
-//		out.println("<p>");
-//		out.println("Collaboration Summary:");
-//		out.println("\nEdwin: worked on the css and format of the website and parsing of radio buttons\n" + 
-//				"Will: worked on the text area apearing and form actions\n");
-//		out.println("</p>");
-//		out.println("</html>");
-//	}
 	
-	public boolean checkValues(String firstName, String lastName, String location, int comf, int sati, int backsup, int mat, int cush, int ans) {
+	public boolean checkValues(String firstName, String lastName, String location, String comf, String sati, String backsup, String mat, String cush) {
+		boolean errors = false;
 		
-		return false;
+		if(!stringIsValidator(firstName) || firstName.length() == 0) {
+			errorString += "<br> First Name input is invalid, cannot be empty or contain numbers/special characters";
+			errors = true;
+		}if(!stringIsValidator(lastName) || lastName.length() == 0) {
+			errorString += "<br> Last Name input is invalid, cannot be empty or contain numbers/special characters";
+			errors = true;
+		}if(!stringIsValidator(location) || location.length() == 0) {
+			errorString += "<br> Location input is invalid, cannot be empty or  contain numbers/special characters";
+			errors = true;
+		}if(comf == null) {
+			errorString += "<br> Comfort rating must be input";
+			errors = true;
+		}if(backsup == null) {
+			errorString += "<br> Back Support rating must be input";
+			errors = true;
+		}if(cush == null) {
+			errorString += "<br> Cushion rating must be input";
+			errors = true;
+		}if(mat == null) {
+			errorString += "<br> Material rating must be input";
+			errors = true;
+		}if(sati == null) {
+			errorString += "<br> Satisfaction rating must be input";
+			errors = true;
+		}
+		return errors;
+	}
+	
+	//makes sure the input strings are all valid characters
+	public boolean stringIsValidator(String s) {
+		if(s.length() == 0) {
+			return false;
+		}
+		char[] sArr = s.toLowerCase().toCharArray();
+		
+		for(int i = 0; i < sArr.length; i ++) {
+			if(sArr[i] < 97 || sArr[i] > 122) {
+				return false;
+			}
+		}
+		return true;
 	}
 	
 	private void printPage (PrintWriter out) {
-		   out.println("<html>");
-
-	
+		 out.println("<html>");
 		 out.println("<style>");
 		 out.println("html,body{height: 100%; width: 100%; margin-top:0;}");
 		 out.println(".ta {margin-bottom:5%;}");
@@ -231,6 +234,15 @@ public class SWE432Assignment8 extends HttpServlet {
 		out.println("<h3>by Edwin O'Meara, Will Dubuque</h3>");
 		out.println("</div>");
 		out.println("<br>");
+		
+		if(errorString.length() != 0) {
+			
+			
+		       out.println("<ol style=\"color:red; text-align:center;\" >");
+		       out.println(errorString);
+		       out.println("</ol>");
+		    
+		}
 
 		out.println("<form method=\"post\">");
 		out.println("<label for=\"fname\">First name:</label>");
