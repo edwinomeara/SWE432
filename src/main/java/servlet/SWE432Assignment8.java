@@ -1,6 +1,3 @@
-
-
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -19,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 public class SWE432Assignment8 extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	 static enum Data {FNAME, LNAME, LOCATION, SCORE};
-	 static String RESOURCE_FILE = "entries.txt";
+	 static String RESOURCE_FILE = "FinalRating.txt";
 	 static final String VALUE_SEPARATOR = ";";
 	 
 	 static String OperationAdd = "Add";
@@ -99,10 +96,67 @@ public class SWE432Assignment8 extends HttpServlet {
 	private void printResponse(PrintWriter out, String resourcePath) {
 
 	    try {
+	    	 out.println("<html>");
+	    	 out.println("<head>");
+			 out.println("<style>");
+			 out.println("html,body{height: 100%; width: 100%; margin-top:0;}");
+			 out.println(".ta {margin-bottom:5%;}");
+			 out.println("body{background: linear-gradient(-45deg, #00ccff, #ffffff);}");
+			 out.println("form{text-align:center; margin-left:auto;margin-right:auto;width:75%;}");
+			 out.println("input{text-align:center;margin-bottom:5%;margin-right:7px;margin-left:15px;}");
+			 out.println("section{background: linear-gradient(-45deg, #00ccff, #ffffff)}");
+			 out.println("h3{text-align:center;}");
+			 out.println(".btn{  margin-left: 30%;\n" + 
+			 		"  margin-right: 30%;\n" + 
+			 		"  margin-bottom: 5%;\n" + 
+			 		"  width: 40%;\n" + 
+			 		"  font-size: 15px;\n" + 
+			 		"  border: 0;\n" + 
+			 		"  background: #743ad5;\n" + 
+			 		"  color: #fff;\n" + 
+			 		"  padding: 12px 50px;\n" + 
+			 		"  border-radius: 20px;\n" + 
+			 		"  cursor: pointer;\n" + 
+			 		"  transition: 0.5s;}");
+			 out.println("h1 {\n" + 
+			 		"  text-transform: uppercase;\n" + 
+			 		"  font-size: 60px;\n" + 
+			 		"  text-align: center;\n" + 
+			 		"  letter-spacing: 14px;\n" + 
+			 		"}");
+			 out.println(".title {\n" + 
+			 		"  border-style: solid;\n" + 
+			 		"  margin-left: 10%;\n" + 
+			 		"  margin-right: 10%;\n" + 
+			 		"\n" + 
+			 		"  border-width: 5px;\n" + 
+			 		"}");
+			 out.println("th, td {\r\n" + 
+			 		"  text-align: left;\r\n" + 
+			 		"  padding: 2px;\r\n" + 
+			 		"}");
+			 out.println("\r\n" + 
+			 		"tr:nth-child(even) {background-color: #00ccff;}\r\n" + 
+			 		"tr:nth-child(odd) {background-color: #00cccc;}\r\n" + 
+			 		"tr:hover {background-color: #f5f5f5;\r\n}"
+			 		+ "table, th, td {\r\n" + 
+			 		"  border: 1px solid black;\r\n" + 
+			 		"}");
+			 out.println("table {\r\n" + 
+			 		"  border-collapse: collapse;\r\n" + 
+			 		"  width: 50%;\r\n" + 
+			 		"}");
+			 
+			 out.println("</style>");
+	    	out.println("</head>");
+	    	out.println("<body>");
+	    	//out.println("<section>");
+	    	out.println(" <table>");
 	        out.println("  <tr>");
 	        out.println("   <th>First Name</th>");
 	        out.println("   <th>Last Name</th>");
 	        out.println("   <th>Location</th>");
+	        out.println("<th>Score</th>");
 	        out.println("  </tr>");
 	        File file = new File(resourcePath);
 	        if(!file.exists()){
@@ -120,16 +174,18 @@ public class SWE432Assignment8 extends HttpServlet {
 	          String []  entry= line.split(VALUE_SEPARATOR);
 	          ratings++;
 	          int num = 1;
-	          out.println("  <p>");
+	          out.println("  <tr>");
 	          for(String s : entry) {
 	        	  if(num == 1) {
+	        		  out.println("<td>");
 	        		  out.print(s);
+	        		  out.println("</td>");
 	        	  }else if(num == 2) {
-	        		  out.print(" "+s );
+	        		  out.print("<td> "+s+"</td>" );
 	        	  }else if(num == 3) {
-	        		  out.print(" rated the chair located in " + s);
+	        		  out.print("<td>"+ s+"</td>");
 	        	  }else if(num == 4) {
-	        		  out.print(" : " + s);
+	        		  out.print("<td>" + s+"</td>");
 	        		  sumtotal+=Integer.parseInt(s);
 	        	  }
 	        	  else {
@@ -137,8 +193,9 @@ public class SWE432Assignment8 extends HttpServlet {
 	        	  }
 	        	  num++;
 	          }
-	          out.println("</p>");
+	          out.println("</tr>");
 	        }
+	        out.println(" </table>");
 	        out.println("<p>");
 	        out.println("<hr>");
 	        out.println("There have been "+ratings+ " chairs rated ");
@@ -150,10 +207,11 @@ public class SWE432Assignment8 extends HttpServlet {
 	        } catch (IOException ex) {
 	            ex.printStackTrace();
 	        }
-	     out.println(" </table>");
-	     out.println("");
 	     
+	     out.println("");
+	     //out.println("</section>");
 	     out.println("</body>");
+	     out.println("</html>");
 	}
 	
 	public boolean checkValues(String firstName, String lastName, String location, String comf, String sati, String backsup, String mat, String cush) {
@@ -263,7 +321,7 @@ public class SWE432Assignment8 extends HttpServlet {
 		//out.println("<input type=\"text\" id=\"lName\" name=\"lName\">");
 		out.println("   <td><input type=\"text\" name=\""+Data.LNAME.name()
 	      +"\"></td>");
-		out.println("<label for=\"userLocation\">Location:</label>");
+		out.println("</br><label for=\"userLocation\">Location:</label>");
 		//out.println("<input type=\"text\" id=\"userLocation\" name=\"userLocation\">");
 		 out.println("   <td><input type=\"text\" name=\""+Data.LOCATION.name()
 	      +"\"></td>");
