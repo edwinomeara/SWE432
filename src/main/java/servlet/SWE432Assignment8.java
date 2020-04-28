@@ -267,7 +267,7 @@ public class SWE432Assignment8 extends HttpServlet {
 		 out.println(".ta {margin-bottom:5%;}");
 		 out.println("form{text-align:center; margin-left:auto;margin-right:auto;width:75%;}");
 		 out.println("input{text-align:center;margin-bottom:5%;margin-right:7px;margin-left:15px;}");
-		 out.println("section{background: linear-gradient(-45deg, #00ccff, #ffffff)}");
+		 out.println("section{background: linear-gradient(-45deg, #00ccff, #ffffff)} ");
 		 out.println("h3{text-align:center;}");
 		 out.println(".btn{  margin-left: 30%;\n" + 
 		 		"  margin-right: 30%;\n" + 
@@ -360,6 +360,13 @@ public class SWE432Assignment8 extends HttpServlet {
 		out.println("<label><input type=\"radio\" name=\"satisfaction\" id=\"o1\" onclick=\"oshowReason()\" value=25>Bad</label>");
 		out.println("</div>");
 		out.println("<input class=\"btn\" type=\"submit\" value=\"Submit\" name=\"rateTheChair\"></button>");
+		
+
+		out.println("<p> Collaboration Summary: </p>");
+		out.println("<p>Edwin O'Meara added the ability to persist the data from the front end and added error handling for incorrect inputs. </p>");
+		out.println("<p>Will Dubuque created a way to average all the of the reviews and updated the page that displayed the reviews for the user.</p>");
+
+		out.println("<br>");
 
 		out.println("</form>");
 
