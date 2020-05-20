@@ -75,24 +75,17 @@ public class SWE432Final extends HttpServlet {
 		
 		out.println("<br>");
 		
-		if(errorString.length() != 0) {
-			
-		       out.println("<ol style=\"color:red; text-align:center;\" >");
-		       out.println(errorString);
-		       out.println("</ol>");
-		    
-		}
 
 		out.println("<form method=\"post\">");
-		//out.println("<label for=\"fname\">First name:</label>");
+		
 		out.println("<h3>Please enter in your Variables/logical Operators(OR/AND), all separated by spaces here.</h3>");
-	
+		out.println("<p>Only up to 2 logical operators permitted. OR, ||, |, and, &, &&</p>");
+		out.println("<p>eg. A && B or C </p>");
 	
 		out.println("   <td><input type=\"text\" name=\""+Data.INPUT1.name()
 	      +"\"></td>");
 		
-		out.println("<p>Only up to 2 logical operators permitted. OR, ||, |, and, &, &&</p>");
-		out.println("<p>eg. A && B or C </p>");
+		
 		
 		out.println("<p>Please choose a way to display the truth table</p>");
 		out.println("<label><input type=\"radio\" name=\"decision\" id=\"cus3\" value=1>TRUE/FALSE</label>");
@@ -115,12 +108,6 @@ public class SWE432Final extends HttpServlet {
 		
 		   i1 = request.getParameter(Data.INPUT1.name());
 		  
-		   errors = false;
-		   errorString = "";
-		   
-		   
-		   //errors = checkValues(il);
-		   
 			 response.setContentType("text/html");
 			 PrintWriter out = response.getWriter();
 			 userDecision = Integer.valueOf(request.getParameter("decision"));
