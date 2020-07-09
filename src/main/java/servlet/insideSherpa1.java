@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/insideSherpa1")
+@WebServlet("/realTimeAlert")
 public class realTimeAlert extends HttpServlet {
 
 	private static int SERVER_ID;
@@ -25,7 +25,7 @@ public class realTimeAlert extends HttpServlet {
 //	static String Servlet = "twoButtons";
 	static String Domain  = "realtimealert.";
 	static String Path    = "herokuapp.com/";
-	static String Servlet = "insideSherpa1";
+	static String Servlet = "realTimeAlert";
 	
 
 	// Button labels
@@ -65,8 +65,8 @@ private void PrintBody (PrintWriter out, String userInput)
    out.println("<p>");
    out.println("Example: 1234,89,69,65");
    out.println("</p>");
-   out.print  ("<form method=\"post\"");
-   out.println(" action=\"https://" + Domain + Path + Servlet + "\">");
+   //out.print  ("<form method=\"post\"");
+   //out.println(" action=\"https://" + Domain + Path + Servlet + "\">");
    out.println("");
    out.println(" <table>");
    out.println("  <tr>");
