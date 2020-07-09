@@ -20,9 +20,10 @@ public class realTimeAlert extends HttpServlet {
 	private static int MEMORY_UTILIZATION;
 	private static int DISK_UTILIZATION;
 
-	static String Domain  = "swe432-twobuttons.";
-	static String Path    = "herokuapp.com/";
-	static String Servlet = "twoButtons";
+//	static String Domain  = "swe432-twobuttons.";
+//	static String Path    = "herokuapp.com/";
+//	static String Servlet = "twoButtons";
+	static String Name = "http://realtimealert.herokuapp.com/insideSherpa1";
 
 	// Button labels
 	static String checkForAlert = "Submit";
@@ -62,7 +63,7 @@ private void PrintBody (PrintWriter out, String userInput)
    out.println("Example: 1234,89,69,65");
    out.println("</p>");
    out.print  ("<form method=\"post\"");
-   out.println(" action=\"https://" + Domain + Path + Servlet + "\">");
+   out.println(" action=\"https://" + Name + "\">");
    out.println("");
    out.println(" <table>");
    out.println("  <tr>");
