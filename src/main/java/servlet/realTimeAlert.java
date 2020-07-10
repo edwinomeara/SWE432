@@ -56,7 +56,7 @@ public class realTimeAlert extends HttpServlet {
 		   response.setContentType("text/html");
 		   PrintWriter out = response.getWriter();
 		   
-		   PrintBody(out, "??","???");
+		   PrintBody(out, "??",rslt);
 	
 	}
 
