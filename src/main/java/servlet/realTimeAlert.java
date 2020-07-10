@@ -15,7 +15,11 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/realTimeAlert")
 public class realTimeAlert extends HttpServlet {
 	
-	static String Domain  = "realtimealert";
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	static String Domain  = "realtimealert.";
 	static String Path    = "herokuapp.com/";
 	static String Servlet = "realTimeAlert";
 	
@@ -38,7 +42,7 @@ public class realTimeAlert extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
 		   String operation = request.getParameter("Operation");
-		   String userInput = request.getParameter("INPUT");
+		   //String userInput = request.getParameter("INPUT");
 		   String rslt = "?";
 
 		   if (operation.equals(checkForAlert))
@@ -46,18 +50,19 @@ public class realTimeAlert extends HttpServlet {
 //		     if(validateInput(userInput)) {
 //		    	 parseInputAndSetAlert(userInput);
 //		     }
-			   rslt = "ALERT!";
+			   rslt = "ALERT!????????";
 		   }
 
 		   response.setContentType("text/html");
 		   PrintWriter out = response.getWriter();
 		   
-		   PrintBody(out, userInput,"???");
+		   PrintBody(out, "??","???");
 	
 	}
 
 private void PrintBody (PrintWriter out, String userInput, String rslt)
 {
+   out.println("<html>");
    out.println("<body>");
    out.println("<p>");
    out.println("Enter in the SERVER_ID, CPU_UTILIZATION, MEMORY_UTILIZATION, DISK_UTILIZATION in order and separated by commas.");
@@ -67,7 +72,6 @@ private void PrintBody (PrintWriter out, String userInput, String rslt)
    out.println("</p>");
    out.print  ("<form method=\"post\"");
    out.println(" action=\"https://" + Domain + Path + Servlet + "\">");
-   out.println("");
    out.println("");
    out.println(" <table>");
    out.println("  <tr>");
@@ -86,6 +90,7 @@ private void PrintBody (PrintWriter out, String userInput, String rslt)
    out.println("</form>");
    out.println("");
    out.println("</body>");
+   out.println("</html>");
 } // End PrintBody
 
 private void PrintBody (PrintWriter out)
@@ -181,6 +186,4 @@ private void PrintBody (PrintWriter out)
 //}
 
 }
-
-
 
