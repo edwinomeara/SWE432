@@ -22,8 +22,7 @@ public class realTimeAlert extends HttpServlet {
 	static String Domain  = "realtimealert.";
 	static String Path    = "herokuapp.com/";
 	static String Servlet = "realTimeAlert";
-	
-	//https://realtimealert.herokuapp.com/realTimeAlert
+	static String rslt = "";
 
 	private static int SERVER_ID;
 	private static int CPU_UTILIZATION;
@@ -42,15 +41,13 @@ public class realTimeAlert extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
 		   String operation = request.getParameter("Operation");
-		   //String userInput = request.getParameter("INPUT");
-		   String rslt = "?";
+		   String userInput = request.getParameter("INPUT");
 
 		   if (operation.equals(checkForAlert))
 		   {
-//		     if(validateInput(userInput)) {
-//		    	 parseInputAndSetAlert(userInput);
-//		     }
-			   rslt = "ALERT!????????";
+		     if(validateInput(userInput)) {
+		    	 parseInputAndSetAlert(userInput);
+		     }
 		   }
 
 		   response.setContentType("text/html");
@@ -80,7 +77,7 @@ private void PrintBody (PrintWriter out, String userInput, String rslt)
    out.println("  </tr>");
    out.println("  <tr>");
    out.println("   <td>Result:");
-   out.println("   <td><input type=\"text\" name=\"RHS\" value=\"" + rslt + "\" size=6>");
+   out.println("   <td><input type=\"text\" name=\"RHS\" value=\"" + rslt + "\" size=30>");
    out.println("  </tr>");
    out.println(" </table>");
    out.println(" <br>");
@@ -98,92 +95,91 @@ private void PrintBody (PrintWriter out)
    PrintBody(out,"","ALERT");
 }
 
-//public static void parseInputAndSetAlert(String input) {
-//	
-//	boolean isAlert = false;
-//	String [] inputArray = input.split(",");
-//	
-//	setSERVER_ID(Integer.parseInt(inputArray[0]));
-//	setCPU_UTILIZATION(Integer.parseInt(inputArray[1]));
-//	setMEMORY_UTILIZATION(Integer.parseInt(inputArray[2]));
-//	setDISK_UTILIZATION(Integer.parseInt(inputArray[3]));
-//	
-//	String alert = "Alert," + SERVER_ID;
-//	
-//	if(CPU_UTILIZATION > 85) {
-//		isAlert = true;
-//		alert += ",CPU_UTILIZATION VIOLATED";
-//	}
-//	if(MEMORY_UTILIZATION > 75) {
-//		isAlert = true;
-//		alert += ",MEMORY_UTILIZATION VIOLATED";
-//	}
-//	if(DISK_UTILIZATION > 60) {
-//		isAlert = true;
-//		alert += ",DISK_UTILIZATION VIOLATED";
-//	}
-//	
-//	//if there is no alert then print no alert else print out the alert created
-//	if(!isAlert) {
-//		System.out.println("No Alert," + SERVER_ID);
-//	}else {
-//		System.out.println(alert);
-//	}
-//	
-//}
-//
-////Check if the user placed in the correct input: no spaces, special characters
-//public static boolean validateInput(String input) {
-//	
-//	//makes sure 4 comma separated variables are added
-//	String [] inputArray = input.split(",");
-//	if(inputArray.length != 4) {
-//		System.out.println("\nInput arguments missing or too many were added.\nMake sure to include 4 v arguments separated by commas. Example: 1234,89,69,65");
-//		return false;
-//	}
-//	
-//	//makes sure no special/alphabetical characters and spaces are added
-//	char[] inputCharArr = input.toCharArray();
-//	for(char c : inputCharArr) {
-//		if(c > '9' || c < '0' && c != ',') {
-//			System.out.println("\nInput entered incorrectly, make sure you do not include alphabetical/special characters and spaces.\n");
-//			return false;
-//		}
-//	}
-//	return true;
-//}
-//
-//public static int getSERVER_ID() {
-//	return SERVER_ID;
-//}
-//
-//public static void setSERVER_ID(int sERVER_ID) {
-//	SERVER_ID = sERVER_ID;
-//}
-//
-//public static int getCPU_UTILIZATION() {
-//	return CPU_UTILIZATION;
-//}
-//
-//public static void setCPU_UTILIZATION(int cPU_UTILIZATION) {
-//	CPU_UTILIZATION = cPU_UTILIZATION;
-//}
-//
-//public static int getMEMORY_UTILIZATION() {
-//	return MEMORY_UTILIZATION;
-//}
-//
-//public static void setMEMORY_UTILIZATION(int mEMORY_UTILIZATION) {
-//	MEMORY_UTILIZATION = mEMORY_UTILIZATION;
-//}
-//
-//public static int getDISK_UTILIZATION() {
-//	return DISK_UTILIZATION;
-//}
-//
-//public static void setDISK_UTILIZATION(int dISK_UTILIZATION) {
-//	DISK_UTILIZATION = dISK_UTILIZATION;
-//}
+public static void parseInputAndSetAlert(String input) {
+	
+	boolean isAlert = false;
+	String [] inputArray = input.split(",");
+	
+	setSERVER_ID(Integer.parseInt(inputArray[0]));
+	setCPU_UTILIZATION(Integer.parseInt(inputArray[1]));
+	setMEMORY_UTILIZATION(Integer.parseInt(inputArray[2]));
+	setDISK_UTILIZATION(Integer.parseInt(inputArray[3]));
+	
+	String alert = "Alert," + SERVER_ID;
+	
+	if(CPU_UTILIZATION > 85) {
+		isAlert = true;
+		alert += ",CPU_UTILIZATION VIOLATED";
+	}
+	if(MEMORY_UTILIZATION > 75) {
+		isAlert = true;
+		alert += ",MEMORY_UTILIZATION VIOLATED";
+	}
+	if(DISK_UTILIZATION > 60) {
+		isAlert = true;
+		alert += ",DISK_UTILIZATION VIOLATED";
+	}
+	
+	//if there is no alert then print no alert else print out the alert created
+	if(!isAlert) {
+		rslt = "No Alert," + SERVER_ID;
+	}else {
+		rslt = alert;
+	}
+}
+
+//Check if the user placed in the correct input: no spaces, special characters
+public static boolean validateInput(String input) {
+	
+	//makes sure 4 comma separated variables are added
+	String [] inputArray = input.split(",");
+	if(inputArray.length != 4) {
+		rslt = "\nInput arguments missing or too many were added.\nMake sure to include 4 v arguments separated by commas. Example: 1234,89,69,65";
+		return false;
+	}
+	
+	//makes sure no special/alphabetical characters and spaces are added
+	char[] inputCharArr = input.toCharArray();
+	for(char c : inputCharArr) {
+		if(c > '9' || c < '0' && c != ',') {
+			rslt = "\nInput entered incorrectly, make sure you do not include alphabetical/special characters and spaces.\n";
+			return false;
+		}
+	}
+	return true;
+}
+
+public static int getSERVER_ID() {
+	return SERVER_ID;
+}
+
+public static void setSERVER_ID(int sERVER_ID) {
+	SERVER_ID = sERVER_ID;
+}
+
+public static int getCPU_UTILIZATION() {
+	return CPU_UTILIZATION;
+}
+
+public static void setCPU_UTILIZATION(int cPU_UTILIZATION) {
+	CPU_UTILIZATION = cPU_UTILIZATION;
+}
+
+public static int getMEMORY_UTILIZATION() {
+	return MEMORY_UTILIZATION;
+}
+
+public static void setMEMORY_UTILIZATION(int mEMORY_UTILIZATION) {
+	MEMORY_UTILIZATION = mEMORY_UTILIZATION;
+}
+
+public static int getDISK_UTILIZATION() {
+	return DISK_UTILIZATION;
+}
+
+public static void setDISK_UTILIZATION(int dISK_UTILIZATION) {
+	DISK_UTILIZATION = dISK_UTILIZATION;
+}
 
 }
 
