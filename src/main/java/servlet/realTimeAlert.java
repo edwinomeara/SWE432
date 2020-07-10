@@ -1,8 +1,3 @@
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -126,7 +121,7 @@ public static boolean validateInput(String input) {
 	//makes sure 4 comma separated variables are added
 	String [] inputArray = input.split(",");
 	if(inputArray.length != 4) {
-		rslt = "Input arguments missing or too many were added.\nMake sure to include 4 v arguments separated by commas. Example: 1234,89,69,65";
+		rslt = "Input arguments missing or too many were added. Make sure to include 4 arguments separated by commas.";
 		return false;
 	}
 	
@@ -134,13 +129,14 @@ public static boolean validateInput(String input) {
 	char[] inputCharArr = input.toCharArray();
 	for(char c : inputCharArr) {
 		if(c > '9' || c < '0' && c != ',') {
-			rslt = "Input entered incorrectly, make sure you do not include alphabetical/special characters and spaces.";
+			rslt = "Input entered incorrectly, make sure you do not include alphabetical/special characters or spaces.";
 			return false;
 		}
 	}
 	return true;
 }
 
+//Getters and Setters
 public static int getSERVER_ID() {
 	return SERVER_ID;
 }
