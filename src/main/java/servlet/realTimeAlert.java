@@ -15,21 +15,16 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/realTimeAlert")
 public class realTimeAlert extends HttpServlet {
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	static String Domain  = "realtimealert.";
 	static String Path    = "herokuapp.com/";
 	static String Servlet = "realTimeAlert";
 	static String rslt = "";
-
 	private static int SERVER_ID;
 	private static int CPU_UTILIZATION;
 	private static int MEMORY_UTILIZATION;
 	private static int DISK_UTILIZATION;
 
-	// Button labels
 	static String checkForAlert = "Enter";
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -52,9 +47,7 @@ public class realTimeAlert extends HttpServlet {
 
 		   response.setContentType("text/html");
 		   PrintWriter out = response.getWriter();
-		   
-		   PrintBody(out, "??",rslt);
-	
+		   PrintBody(out, userInput,rslt);
 	}
 
 private void PrintBody (PrintWriter out, String userInput, String rslt)
@@ -73,26 +66,25 @@ private void PrintBody (PrintWriter out, String userInput, String rslt)
    out.println(" <table>");
    out.println("  <tr>");
    out.println("   <td>Input:");
-   out.println("   <td><input type=\"text\" name=\"INPUT\" value=\"" + userInput + "\" size=20>");
+   out.println("   <td><input type=\"text\" name=\"INPUT\" value=\"" + userInput + "\" size=30>");
    out.println("  </tr>");
    out.println("  <tr>");
    out.println("   <td>Result:");
-   out.println("   <td><input type=\"text\" name=\"RHS\" value=\"" + rslt + "\" size=30>");
+   out.println("   <td><input type=\"text\" name=\"RHS\" value=\"" + rslt + "\" size=100>");
    out.println("  </tr>");
    out.println(" </table>");
    out.println(" <br>");
    out.println(" <br>");
    out.println(" <input type=\"submit\" value=\"" + checkForAlert + "\" name=\"Operation\">");
-   //out.println(" <input type=\"reset\" value=\"Reset\" name=\"reset\">");
    out.println("</form>");
    out.println("");
    out.println("</body>");
    out.println("</html>");
-} // End PrintBody
+}
 
 private void PrintBody (PrintWriter out)
 {
-   PrintBody(out,"","ALERT");
+   PrintBody(out,"","");
 }
 
 public static void parseInputAndSetAlert(String input) {
@@ -134,7 +126,7 @@ public static boolean validateInput(String input) {
 	//makes sure 4 comma separated variables are added
 	String [] inputArray = input.split(",");
 	if(inputArray.length != 4) {
-		rslt = "\nInput arguments missing or too many were added.\nMake sure to include 4 v arguments separated by commas. Example: 1234,89,69,65";
+		rslt = "Input arguments missing or too many were added.\nMake sure to include 4 v arguments separated by commas. Example: 1234,89,69,65";
 		return false;
 	}
 	
@@ -142,7 +134,7 @@ public static boolean validateInput(String input) {
 	char[] inputCharArr = input.toCharArray();
 	for(char c : inputCharArr) {
 		if(c > '9' || c < '0' && c != ',') {
-			rslt = "\nInput entered incorrectly, make sure you do not include alphabetical/special characters and spaces.\n";
+			rslt = "Input entered incorrectly, make sure you do not include alphabetical/special characters and spaces.";
 			return false;
 		}
 	}
