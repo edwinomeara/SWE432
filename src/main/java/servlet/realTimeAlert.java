@@ -33,6 +33,11 @@ public class realTimeAlert extends HttpServlet {
 		   String operation = request.getParameter("Operation");
 		   String userInput = request.getParameter("INPUT");
 
+		   /*
+		    * 1. Check to see if the user input is correctly formatted.
+		    * 2. Check to see if an alert is needed.  
+		    */
+		   
 		   if (operation.equals(checkForAlert))
 		   {
 		     if(validateInput(userInput)) {
